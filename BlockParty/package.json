@@ -1,0 +1,9 @@
+{
+  "name": "block-party",
+  "version": "0.0.0",
+  "description": "BlockParty",
+  "main": "server.js",
+  "author": {
+    "name": "E840923"
+  }
+}
