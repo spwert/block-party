@@ -11,7 +11,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>d971e4c8-3e9a-4f09-abe8-f922e82b4482</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>nprplaylist.js</StartupFile>
+    <StartupFile>testNprPlaylist.js</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -33,6 +33,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="spotify.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="testNprPlaylist.js">
       <SubType>Code</SubType>
     </Compile>
     <Content Include="package.json" />

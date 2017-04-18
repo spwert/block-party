@@ -1,4 +1,5 @@
-﻿var SpotifyWebApi = require('spotify-web-api-node');
+﻿// Spotify web API library
+var SpotifyWebApi = require('spotify-web-api-node');
 var spotifyApi = new SpotifyWebApi({
 	clientId: 'bc4c9d8493304fdfbbe17cc26b4b3d4f',
 	clientSecret: '9904b9fbd4ec40efac0f442bce4889e0',
@@ -40,6 +41,8 @@ var getTrackUri = function (title, artist, album) {
 		});
 };
 
-// Make these functions externally visible
-var exports = module.exports {
+// Make these vars externally visible
+module.exports = {
+	spotifyApi: spotifyApi,
+	getTrackUri: getTrackUri
 };

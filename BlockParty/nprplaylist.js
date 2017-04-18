@@ -1,5 +1,5 @@
 ﻿'use strict';
-var request = require('request');
+var request = require('request-promise-native');
 var querystring = require('querystring');
 
 /*
@@ -30,7 +30,7 @@ var zeroPad = function (num, places) {
  * -program_id: The ID of the radio show. Used as the prog_id parameter to the NPR API.
  * -year, month, day: The date of the episode to retrieve the playlist for.
  *
- * Returns: An array of song objects.
+ * Returns: A promise that returns array of song objects.
  */
 var getNprPlaylistForDate = function (program_id, year, month, day) {
 	// The base URL for the NPR API
@@ -41,7 +41,7 @@ var getNprPlaylistForDate = function (program_id, year, month, day) {
 	// the order to change in some manner which I haven't bothered to figure out.
 	var order = "1";
 	// The datestamp required by the API URL (YYYY-MM-DD).
-	var datestamp = zeroPad(year, 4) + zeroPad(month, 2) + zeroPad(day, 2);
+	var datestamp = zeroPad(year, 4) + "-" + zeroPad(month, 2) + "-" + zeroPad(day, 2);
 	// Put it all together
 	var completeUrl = apiUrl + querystring.stringify({
 		t: t,
@@ -49,19 +49,25 @@ var getNprPlaylistForDate = function (program_id, year, month, day) {
 		datestamp: datestamp,
 		prog_id: program_id
 	});
+
 	// Call the API
-	var response = request.get(completeUrl, function (error, response, body) {
-		if (error) {
-			console.log("Error while getting playlist: " + error);
-		}
-		else if (response.statusCode !== 200) {
-			console.log("Invalid response status: " + response.statusCode + ": " + response.statusMessage);
-		}
-		else {
-			return body.playlist.playlist;
-		}
+	var options = {
+		uri: completeUrl,
+		json: true
+	};
+
+	let promise = new Promise((resolve, reject) => {
+		request(options)
+			.then((response) => {
+				resolve(response.playlist[0].playlist);
+			})
+			.catch((err) => {
+				reject(err)
+			});
 	});
-};
+
+	return promise;
+}
 
 /*
  * parseNprPlaylist
@@ -88,8 +94,7 @@ var getBlockPartyPlaylistForDate = function (year, month, day) {
 };
 
 // Make these functions externally visible
-var exports = module.exports {
-	parseNprPlaylist = parseNprPlaylist,
-	zeroPad = zeroPad,
-	getBlockPartyPlaylistForDate = getBlockPartyPlaylistForDate
+module.exports = {
+	parseNprPlaylist: parseNprPlaylist,
+	getBlockPartyPlaylistForDate: getBlockPartyPlaylistForDate
 };

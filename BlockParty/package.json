@@ -5,5 +5,13 @@
   "main": "server.js",
   "author": {
     "name": "E840923"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.2",
+    "querystring": "^0.2.0",
+    "request": "^2.81.0",
+    "request-promise-native": "^1.0.3",
+    "spotify-web-api-node": "^2.3.6"
   }
 }
