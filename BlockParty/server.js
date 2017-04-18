@@ -1,8 +1,17 @@
-'use strict';
+﻿'use strict';
 var http = require('http');
-var port = process.env.PORT || 1337;
+var express = require('express');
+var request = require('request');
+var querystring = require('querystring');
+var cookieParser = require('cookie-parser');
+var spotify = require('./spotify');
+var nprplaylist = require('./nprplaylist');
+var PORT = 8888;
 
-http.createServer(function (req, res) {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Hello World\n');
-}).listen(port);
+// TODO:
+// - Authenticate user
+// - Ask for date
+// - Get WYEP playlist for that date
+// - Get Spotify tracks
+// - Create playlist with those tracks
+// - Feedback UI - which songs couldn't be found?
